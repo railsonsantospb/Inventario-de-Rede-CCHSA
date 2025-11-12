@@ -62,7 +62,7 @@ class EquipamentoAdmin(admin.ModelAdmin):
             'fields': ('nome', 'tipo', 'modelo', 'marca', 'numero_serie', 'ativo')
         }),
         ('Conexão', {
-            'fields': ('ip_gerencia', 'usuario', 'senha')
+            'fields': ('ip_gerencia', 'porta', 'usuario', 'senha')
         }),
         ('Localização', {
             'fields': ('localizacao', 'andar', 'sala')

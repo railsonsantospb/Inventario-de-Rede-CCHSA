@@ -42,6 +42,9 @@ class Equipamento(models.Model):
     marca = models.CharField('Marca', max_length=50)
     numero_serie = models.CharField('Número de Série', max_length=50, blank=True, null=True)
     ip_gerencia = models.GenericIPAddressField('IP de Gerência', protocol='IPv4', blank=True, null=True)
+    porta = models.PositiveIntegerField('Porta de Acesso', blank=True, null=True, 
+                                      validators=[MinValueValidator(1), MaxValueValidator(65535)],
+                                      help_text='Porta de acesso ao equipamento (1-65535)')
     usuario = models.CharField('Usuário', max_length=50, blank=True, null=True)
     senha = models.CharField('Senha', max_length=100, blank=True, null=True)
     localizacao = models.ForeignKey(Localizacao, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Localização')
@@ -64,7 +67,7 @@ class PortaSwitch(models.Model):
     equipamento = models.ForeignKey(Equipamento, on_delete=models.CASCADE, related_name='portas', 
                                   limit_choices_to={'tipo__in': ['SW', 'RT']},
                                   verbose_name='Equipamento de Rede')
-    numero = models.PositiveIntegerField('Número da Porta', validators=[MinValueValidator(1), MaxValueValidator(48)])
+    numero = models.PositiveIntegerField('Número da Porta', validators=[MinValueValidator(1)])
     descricao = models.CharField('Descrição', max_length=200, blank=True, null=True)
     equipamento_conectado = models.ForeignKey(Equipamento, on_delete=models.SET_NULL, 
                                             null=True, blank=True, related_name='porta_conectada',
